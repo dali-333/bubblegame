@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dnyyx28ndoydn"]
+[gd_scene load_steps=8 format=3 uid="uid://dnyyx28ndoydn"]
 
 [ext_resource type="PackedScene" uid="uid://c5foatdyk3vje" path="res://player/player.tscn" id="1_ruksl"]
+[ext_resource type="PackedScene" uid="uid://pmmbkobgk3ba" path="res://assets/models/last_level_door.glb" id="2_hyxf3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1s67b"]
 size = Vector3(100, 1, 100)
@@ -33,3 +34,6 @@ mesh = SubResource("PlaneMesh_ujiyv")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.716253, 0.697841, 0, -0.697841, 0.716253, 0, 4.95947, 10)
 shadow_enabled = true
+
+[node name="Door" parent="." instance=ExtResource("2_hyxf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
