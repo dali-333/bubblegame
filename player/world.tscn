@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://dnyyx28ndoydn"]
+
+[ext_resource type="PackedScene" uid="uid://c5foatdyk3vje" path="res://player/player.tscn" id="1_ruksl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1s67b"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_aphy0"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4mmh7"]
+noise = SubResource("FastNoiseLite_aphy0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g1ejj"]
+albedo_texture = SubResource("NoiseTexture2D_4mmh7")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ujiyv"]
+material = SubResource("StandardMaterial3D_g1ejj")
+size = Vector2(100, 100)
+
+[node name="World" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_1s67b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_ujiyv")
+
+[node name="Player" parent="." instance=ExtResource("1_ruksl")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.716253, 0.697841, 0, -0.697841, 0.716253, 0, 4.95947, 10)
+shadow_enabled = true

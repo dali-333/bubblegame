@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://c5foatdyk3vje"]
+
+[ext_resource type="Texture2D" uid="uid://c2rhxgetoupgj" path="res://icon.svg" id="1_f6so6"]
+[ext_resource type="Script" path="res://components/stats_component.gd" id="2_id0la"]
+[ext_resource type="Script" path="res://components/movement_component.gd" id="3_e8teh"]
+[ext_resource type="Script" path="res://components/move_input_component.gd" id="4_050hm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0asw"]
+atlas = ExtResource("1_f6so6")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5c0sb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c0asw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_khnnb"]
+radius = 0.832885
+
+[node name="Player" type="Node3D"]
+
+[node name="PlayerBody" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837512, 0)
+
+[node name="PlayerSprite" type="AnimatedSprite3D" parent="PlayerBody"]
+billboard = 1
+shaded = true
+sprite_frames = SubResource("SpriteFrames_5c0sb")
+
+[node name="PlayerCollision" type="CollisionShape3D" parent="PlayerBody"]
+shape = SubResource("SphereShape3D_khnnb")
+
+[node name="CameraPoint" type="Node3D" parent="PlayerBody"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0)
+
+[node name="PlayerCamera" type="Camera3D" parent="PlayerBody/CameraPoint"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2.51764, 6.06815)
+
+[node name="StatsComponent" type="Node" parent="."]
+script = ExtResource("2_id0la")
+
+[node name="MovementComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("3_e8teh")
+actor = NodePath("../PlayerBody")
+
+[node name="MoveInputComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "move_component")]
+script = ExtResource("4_050hm")
+stats_component = NodePath("../StatsComponent")
+move_component = NodePath("../MovementComponent")
