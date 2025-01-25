@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dnyyx28ndoydn"]
+[gd_scene load_steps=12 format=3 uid="uid://dnyyx28ndoydn"]
 
 [ext_resource type="PackedScene" uid="uid://c5foatdyk3vje" path="res://player/player.tscn" id="1_ruksl"]
-[ext_resource type="PackedScene" uid="uid://dmgl4ih5iwbrt" path="res://enemies/fear_enemy_backup.tscn" id="2_gq7eh"]
+[ext_resource type="PackedScene" uid="uid://wx3o7v8ag7dl" path="res://enemies/fear_enemy.tscn" id="2_gq7eh"]
 [ext_resource type="PackedScene" uid="uid://pmmbkobgk3ba" path="res://assets/models/last_level_door.glb" id="2_hyxf3"]
+[ext_resource type="Script" path="res://scripts/enemy spawn/spawns.gd" id="3_q2ejt"]
+[ext_resource type="Script" path="res://scripts/enemy spawn/spawn.gd" id="4_vmv6o"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_0ooqo"]
 vertices = PackedVector3Array(-1.75, 0.5, -9, -0.25, 0.5, -9, -0.5, 0.5, -49.25, -2.25, 0.5, -8, -49.25, 0.5, -49.25, -49.25, 0.5, -8, 0.5, 0.5, -9, 0.75, 0.5, -49.25, 2, 0.5, -9, 2.5, 0.5, -8, 49.25, 0.5, -8, 49.25, 0.5, -49.25, -1.75, 0.5, -7, 0, 0.5, -6.75, -49.25, 0.5, 49.25, 0.25, 0.5, 49.25, 2, 0.5, -7, 49.25, 0.5, 49.25)
@@ -28,12 +30,6 @@ size = Vector2(100, 100)
 [node name="World" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("1_ruksl")]
-
-[node name="EnemyBodyBackup" parent="." instance=ExtResource("2_gq7eh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.642658, -20.6495)
-
-[node name="EnemyBodyBackup2" parent="." instance=ExtResource("2_gq7eh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1798, 0.642658, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.716253, 0.697841, 0, -0.697841, 0.716253, 0, 4.95947, 10)
@@ -62,5 +58,27 @@ layers = 4
 [node name="StaticBody3D" parent="NavigationRegion3D/Door/door_mesh" index="0"]
 collision_layer = 4
 collision_mask = 0
+
+[node name="Spawns" type="Node3D" parent="." node_paths=PackedStringArray("spawn_timer")]
+script = ExtResource("3_q2ejt")
+spawn_timer = NodePath("../SpawnTimer")
+
+[node name="Spawn" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0)
+script = ExtResource("4_vmv6o")
+instances = Array[PackedScene]([ExtResource("2_gq7eh")])
+
+[node name="Spawn2" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -16)
+script = ExtResource("4_vmv6o")
+instances = Array[PackedScene]([ExtResource("2_gq7eh")])
+
+[node name="Spawn3" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -16)
+script = ExtResource("4_vmv6o")
+instances = Array[PackedScene]([ExtResource("2_gq7eh")])
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true
 
 [editable path="NavigationRegion3D/Door"]
