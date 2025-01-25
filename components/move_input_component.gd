@@ -2,7 +2,7 @@ class_name MoveInputComponent
 extends Node
 
 @onready var player_sprite: AnimatedSprite3D = $"../../PlayerSprite"
-
+@export var hurt_box : HurtboxComponent
 @export_group("Related Components")
 @export var stats_component : StatsComponent
 @export var move_component : MovementComponent
@@ -85,11 +85,13 @@ func _physics_process(delta: float) -> void:
 	move_component.velocity = input_axis.normalized() * stats_component.move_speed
 	
 	if is_dashing:
+		hurt_box.is_invincible = true
 		move_component.velocity = dash_velocity
 		dash_timer -= delta
 	
 		if dash_timer <= 0:
 			is_dashing = false
+			hurt_box.is_invincible = false
 			move_component.velocity = Vector3.ZERO
 	
 	if dash_cooldown_timer > 0:
