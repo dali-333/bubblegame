@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwhxuibgxm3s"]
+
+[ext_resource type="PackedScene" uid="uid://pmmbkobgk3ba" path="res://assets/models/last_level_door.glb" id="1_j4hyf"]
+
+[node name="Door" instance=ExtResource("1_j4hyf")]

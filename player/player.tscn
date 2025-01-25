@@ -5,10 +5,10 @@
 [ext_resource type="Script" path="res://components/stats_component.gd" id="2_id0la"]
 [ext_resource type="Script" path="res://components/hurtbox_component.gd" id="3_4m61r"]
 [ext_resource type="Script" path="res://components/movement_component.gd" id="3_e8teh"]
+[ext_resource type="Script" path="res://components/exp_component.gd" id="4_1c3tg"]
 [ext_resource type="Script" path="res://components/move_input_component.gd" id="4_050hm"]
 [ext_resource type="Script" path="res://components/hurt_component.gd" id="7_bpmwu"]
 [ext_resource type="Script" path="res://components/die_component.gd" id="8_4ikj3"]
-[ext_resource type="Script" path="res://scripts/states/state_machine.gd" id="9_soj7b"]
 [ext_resource type="Script" path="res://components/attack_input_component.gd" id="10_5lm38"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yvus4"]
@@ -423,7 +423,10 @@ radius = 0.001
 [sub_resource type="SphereShape3D" id="SphereShape3D_my05y"]
 radius = 0.832885
 
-[sub_resource type="AudioStream" id="AudioStream_tmt3o"]
+[sub_resource type="Curve" id="Curve_a36hh"]
+max_value = 10.0
+_data = [Vector2(0, 0), 0.0, 25.0, 0, 0, Vector2(1, 10), 25.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="PlayerBody" type="CharacterBody3D" groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837512, 0)
@@ -468,16 +471,25 @@ transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 
 
 [node name="Player" type="Node3D" parent="."]
 
-[node name="StatsComponent" type="Node" parent="Player"]
+[node name="ExperienceComponent" type="Node" parent="Player" node_paths=PackedStringArray("stats")]
+script = ExtResource("4_1c3tg")
+stats = NodePath("../StatsComponent")
+level_curve = SubResource("Curve_a36hh")
+
+[node name="StatsComponent" type="Node" parent="Player" node_paths=PackedStringArray("exp_component")]
 script = ExtResource("2_id0la")
-damage = 5.0
+exp_component = NodePath("../ExperienceComponent")
+move_speed = 12.5
+dash_distance = 12.5
+damage = 12.5
 
 [node name="MovementComponent" type="Node" parent="Player" node_paths=PackedStringArray("actor")]
 script = ExtResource("3_e8teh")
 actor = NodePath("../..")
 
-[node name="MoveInputComponent" type="Node" parent="Player" node_paths=PackedStringArray("stats_component", "move_component")]
+[node name="MoveInputComponent" type="Node" parent="Player" node_paths=PackedStringArray("hurt_box", "stats_component", "move_component")]
 script = ExtResource("4_050hm")
+hurt_box = NodePath("../../HurtboxComponent")
 stats_component = NodePath("../StatsComponent")
 move_component = NodePath("../MovementComponent")
 
@@ -491,20 +503,8 @@ script = ExtResource("8_4ikj3")
 actor = NodePath("..")
 stats = NodePath("../StatsComponent")
 
-[node name="StateMachine" type="Node" parent="Player"]
-script = ExtResource("9_soj7b")
-
-[node name="AttackInputComponent" type="Node" parent="Player" node_paths=PackedStringArray("stats", "hitbox")]
+[node name="AttackInputComponent" type="Node" parent="Player" node_paths=PackedStringArray("stats", "hitbox", "exp_component")]
 script = ExtResource("10_5lm38")
 stats = NodePath("../StatsComponent")
 hitbox = NodePath("../../HitboxComponent")
-
-[node name="Audio" type="Node3D" parent="."]
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Audio"]
-transform = Transform3D(0.998739, 0, 0.0502095, 0, 1, 0, -0.0502095, 0, 0.998739, -0.306725, -0.533628, 0.202948)
-stream = SubResource("AudioStream_tmt3o")
-bus = &"sfx"
-
-[node name="AudioListener3D" type="AudioListener3D" parent="Audio"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.191536, 0.169999, -0.00101042)
+exp_component = NodePath("../ExperienceComponent")

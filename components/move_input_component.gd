@@ -2,7 +2,7 @@ class_name MoveInputComponent
 extends Node
 
 @onready var player_sprite: AnimatedSprite3D = $"../../PlayerSprite"
-
+@export var hurt_box : HurtboxComponent
 @export_group("Related Components")
 @export var stats_component : StatsComponent
 @export var move_component : MovementComponent
@@ -18,9 +18,6 @@ var is_dashing : bool = false
 var dash_timer : float = 0.0
 var dash_cooldown_timer : float = 0.0
 var dash_velocity : Vector3 = Vector3.ZERO
-
-#audio
-@onready var audio_player = $"../../Audio/AudioStreamPlayer3D"
 
 func start_dash():
 	var dash_direction : Vector3 = Vector3.ZERO
@@ -71,9 +68,6 @@ func animate():
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("dash") and dash_cooldown_timer <= 0 and not is_dashing:
 		start_dash()
-		audio_player.stream = preload("res://assets/sound effects/dash.wav")
-		audio_player.play()
-		
 
 func _process(delta: float) -> void:
 	if player_sprite.animation == "dash_down" or player_sprite.animation == "dash_right" or player_sprite.animation == "dash_forward":
@@ -91,11 +85,13 @@ func _physics_process(delta: float) -> void:
 	move_component.velocity = input_axis.normalized() * stats_component.move_speed
 	
 	if is_dashing:
+		hurt_box.is_invincible = true
 		move_component.velocity = dash_velocity
 		dash_timer -= delta
 	
 		if dash_timer <= 0:
 			is_dashing = false
+			hurt_box.is_invincible = false
 			move_component.velocity = Vector3.ZERO
 	
 	if dash_cooldown_timer > 0:
