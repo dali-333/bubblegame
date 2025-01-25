@@ -21,6 +21,9 @@ var special_attack_timer : float = 0.0
 @onready var base_damage = stats.damage
 @onready var amp_damage = stats.damage + stats.damage * 0.25
 
+# audio
+@onready var audio_player: AudioStreamPlayer3D = $"../../audio/AudioStreamPlayer3D"
+
 func attack():
 	if attack_box is CollisionShape3D:
 		hitbox.monitorable = true
@@ -29,6 +32,15 @@ func attack():
 		attack_timer = attack_duration
 		attack_cooldown_timer = attack_cooldown
 		special_attack_counter += 1
+		
+func play_audio(): 
+	if special_attack_counter == 1: 
+		audio_player.stream = preload("res://assets/sound effects/aoe_1.wav")
+	if special_attack_counter == 2: 
+		audio_player.stream = preload("res://assets/sound effects/aoe_2.wav")
+	if special_attack_counter == 1: 
+		audio_player.stream = preload("res://assets/sound effects/aoe_3.wav")
+	audio_player.play()
 
 func _ready() -> void:
 	exp_component.level_up.connect(
@@ -39,6 +51,8 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack") and attack_cooldown_timer <= 0 and not is_attacking:
 		attack()
+		play_audio()
+	
 
 func _process(delta: float) -> void:
 	if is_attacking:

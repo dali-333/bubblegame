@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://c5foatdyk3vje"]
+[gd_scene load_steps=67 format=3 uid="uid://c5foatdyk3vje"]
 
 [ext_resource type="Texture2D" uid="uid://bki3lxmlr32ne" path="res://assets/spritesheets/draft_sprite_sheet.png" id="1_um8mx"]
 [ext_resource type="Script" path="res://components/hitbox_component.gd" id="2_2crss"]
@@ -428,6 +428,8 @@ max_value = 10.0
 _data = [Vector2(0, 0), 0.0, 25.0, 0, 0, Vector2(1, 10), 25.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="AudioStream" id="AudioStream_h358p"]
+
 [node name="PlayerBody" type="CharacterBody3D" groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837512, 0)
 collision_layer = 0
@@ -508,3 +510,11 @@ script = ExtResource("10_5lm38")
 stats = NodePath("../StatsComponent")
 hitbox = NodePath("../../HitboxComponent")
 exp_component = NodePath("../ExperienceComponent")
+
+[node name="audio" type="Node3D" parent="."]
+
+[node name="AudioListener3D" type="AudioListener3D" parent="audio"]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="audio"]
+stream = SubResource("AudioStream_h358p")
+bus = &"sfx"

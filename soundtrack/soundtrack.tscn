@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://cg6cvspnrhknp"]
+
+[ext_resource type="AudioStream" uid="uid://3l43rt5qy3mn" path="res://assets/sound effects/soundtrack_fear/fear_start.wav" id="1_ar80x"]
+[ext_resource type="AudioStream" uid="uid://by5ia5ewo8nhj" path="res://assets/sound effects/soundtrack_fear/fear_drums.wav" id="2_xmeom"]
+[ext_resource type="AudioStream" uid="uid://5foc1r0425nv" path="res://assets/sound effects/soundtrack_fear/fear_violins.wav" id="3_vag0w"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_6585s"]
+stream_count = 3
+stream_0/stream = ExtResource("1_ar80x")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("2_xmeom")
+stream_1/volume = 0.0
+stream_2/stream = ExtResource("3_vag0w")
+stream_2/volume = 0.0
+
+[node name="Soundtrack" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamSynchronized_6585s")
+autoplay = true
+bus = &"soundtrack"

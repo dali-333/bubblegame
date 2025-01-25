@@ -15,6 +15,17 @@ extends Node
 @export var level_curve : Curve
 var sampled_level : float
 
+#variables to control the soundtrack 
+#@onready var soundtrack =  $Soundtrack
+var max_current_experience = 10 
+var min_current_experience = 0
+var mid_current_experience = 5 
+var max_volume = 0 
+var min_volume = -60 
+
+
+
+
 signal level_up(new_level : int)
 signal exp_gained(new_exp : float)
 
@@ -39,4 +50,23 @@ func _ready() -> void:
 			stats.damage += stats.damage * sampled_level
 			stats.move_speed += stats.move_speed * sampled_level
 			stats.dash_distance += stats.dash_distance * sampled_level
+			
 	)
+	
+func _process(delta: float) -> void:
+	print("current experience = ", current_experience)
+	if (current_experience >= min_current_experience) and (current_experience < mid_current_experience) :
+		print('first')
+		Soundtrack.stream.set_sync_stream_volume(1,-60)
+		Soundtrack.stream.set_sync_stream_volume(2,-60)
+	if (current_experience >= mid_current_experience) and (current_experience < max_current_experience):
+		print('second')
+		Soundtrack.stream.set_sync_stream_volume(1, current_experience)
+		Soundtrack.stream.set_sync_stream_volume(2,min_volume)
+	if (current_experience >= max_current_experience):
+		print('third')
+		Soundtrack.stream.set_sync_stream_volume(1,current_experience)
+		Soundtrack.stream.set_sync_stream_volume(2,current_experience)
+		
+		
+	

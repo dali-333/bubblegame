@@ -19,6 +19,9 @@ var dash_timer : float = 0.0
 var dash_cooldown_timer : float = 0.0
 var dash_velocity : Vector3 = Vector3.ZERO
 
+# music 
+@onready var audio_player: AudioStreamPlayer3D = $"../../audio/AudioStreamPlayer3D"
+
 func start_dash():
 	var dash_direction : Vector3 = Vector3.ZERO
 	if Input.is_action_pressed("move_forward"):
@@ -68,6 +71,8 @@ func animate():
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("dash") and dash_cooldown_timer <= 0 and not is_dashing:
 		start_dash()
+		audio_player.stream = preload("res://assets/sound effects/dash.wav")
+		audio_player.play()
 
 func _process(delta: float) -> void:
 	if player_sprite.animation == "dash_down" or player_sprite.animation == "dash_right" or player_sprite.animation == "dash_forward":
