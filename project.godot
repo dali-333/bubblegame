@@ -11,8 +11,14 @@ config_version=5
 [application]
 
 config/name="BubbleGame"
+run/main_scene="res://player/world.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[global_group]
+
+Player=""
+Enemies=""
 
 [input]
 

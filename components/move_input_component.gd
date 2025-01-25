@@ -1,7 +1,7 @@
 class_name MoveInputComponent
 extends Node
 
-@onready var player_sprite: AnimatedSprite3D = $"../PlayerBody/PlayerSprite"
+@onready var player_sprite: AnimatedSprite3D = $"../../PlayerSprite"
 
 @export_group("Related Components")
 @export var stats_component : StatsComponent
@@ -9,7 +9,7 @@ extends Node
 
 # Dash Exports
 @export_group("Dash")
-@export var dash_duration : float = 0.3
+@export var dash_duration : float = 0.5
 @export var dash_cooldown : float = 2.5
 @export var dash_direction_factor : float = 1.0
 

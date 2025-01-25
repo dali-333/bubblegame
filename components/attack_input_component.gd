@@ -20,6 +20,8 @@ var special_attack_timer : float = 0.0
 
 func attack():
 	if attack_box is CollisionShape3D:
+		hitbox.monitorable = true
+		hitbox.monitoring = true
 		is_attacking = true
 		attack_timer = attack_duration
 		attack_cooldown_timer = attack_cooldown
@@ -41,6 +43,8 @@ func _process(delta: float) -> void:
 			attack_timer -= delta
 			if attack_timer <= 0:
 				is_attacking = false
+				hitbox.monitorable = false
+				hitbox.monitoring = false
 				attack_box.shape.radius = attack_base_radius
 				print("Player Attack Radius = " + str(attack_box.shape.radius))
 	if special_attack_counter >= 1:

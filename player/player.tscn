@@ -225,7 +225,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"dash_down",
-"speed": 16.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -239,7 +239,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"dash_forward",
-"speed": 16.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -262,7 +262,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"dash_right",
-"speed": 16.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -423,74 +423,76 @@ radius = 0.001
 [sub_resource type="SphereShape3D" id="SphereShape3D_my05y"]
 radius = 0.832885
 
-[node name="Player" type="Node3D"]
-
-[node name="PlayerBody" type="CharacterBody3D" parent="."]
+[node name="PlayerBody" type="CharacterBody3D" groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837512, 0)
 collision_layer = 0
 collision_mask = 4
 platform_floor_layers = 4
 platform_wall_layers = 4
 
-[node name="PlayerSprite" type="AnimatedSprite3D" parent="PlayerBody"]
+[node name="PlayerSprite" type="AnimatedSprite3D" parent="."]
 billboard = 1
 shaded = true
 sprite_frames = SubResource("SpriteFrames_5c0sb")
-animation = &"idle"
+animation = &"dash_right"
 autoplay = "idle"
 
-[node name="PlayerCollision" type="CollisionShape3D" parent="PlayerBody"]
+[node name="PlayerCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_khnnb")
 
-[node name="HitboxComponent" type="Area3D" parent="PlayerBody" node_paths=PackedStringArray("stats")]
+[node name="HitboxComponent" type="Area3D" parent="." node_paths=PackedStringArray("stats")]
 collision_layer = 0
 collision_mask = 2
+monitoring = false
+monitorable = false
 script = ExtResource("2_2crss")
-stats = NodePath("../../StatsComponent")
+stats = NodePath("../Player/StatsComponent")
 
-[node name="PlayerHitboxCollision" type="CollisionShape3D" parent="PlayerBody/HitboxComponent"]
+[node name="PlayerHitboxCollision" type="CollisionShape3D" parent="HitboxComponent"]
 shape = SubResource("SphereShape3D_1pde4")
 
-[node name="HurtboxComponent" type="Area3D" parent="PlayerBody"]
+[node name="HurtboxComponent" type="Area3D" parent="."]
 collision_mask = 0
 script = ExtResource("3_4m61r")
 
-[node name="PlayerHurtboxCollision" type="CollisionShape3D" parent="PlayerBody/HurtboxComponent"]
+[node name="PlayerHurtboxCollision" type="CollisionShape3D" parent="HurtboxComponent"]
 shape = SubResource("SphereShape3D_my05y")
 
-[node name="CameraPoint" type="Node3D" parent="PlayerBody"]
+[node name="CameraPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0)
 
-[node name="PlayerCamera" type="Camera3D" parent="PlayerBody/CameraPoint"]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2.51764, 6.06815)
+[node name="PlayerCamera" type="Camera3D" parent="CameraPoint"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2, 8)
 
-[node name="StatsComponent" type="Node" parent="."]
+[node name="Player" type="Node3D" parent="."]
+
+[node name="StatsComponent" type="Node" parent="Player"]
 script = ExtResource("2_id0la")
 damage = 5.0
 
-[node name="MovementComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="MovementComponent" type="Node" parent="Player" node_paths=PackedStringArray("actor")]
 script = ExtResource("3_e8teh")
-actor = NodePath("../PlayerBody")
+actor = NodePath("../..")
 
-[node name="MoveInputComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "move_component")]
+[node name="MoveInputComponent" type="Node" parent="Player" node_paths=PackedStringArray("stats_component", "move_component")]
 script = ExtResource("4_050hm")
 stats_component = NodePath("../StatsComponent")
 move_component = NodePath("../MovementComponent")
 
-[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats", "hurtbox")]
+[node name="HurtComponent" type="Node" parent="Player" node_paths=PackedStringArray("stats", "hurtbox")]
 script = ExtResource("7_bpmwu")
 stats = NodePath("../StatsComponent")
-hurtbox = NodePath("../PlayerBody/HurtboxComponent")
+hurtbox = NodePath("../../HurtboxComponent")
 
-[node name="DieComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "stats")]
+[node name="DieComponent" type="Node" parent="Player" node_paths=PackedStringArray("actor", "stats")]
 script = ExtResource("8_4ikj3")
 actor = NodePath("..")
 stats = NodePath("../StatsComponent")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="Player"]
 script = ExtResource("9_soj7b")
 
-[node name="AttackInputComponent" type="Node" parent="." node_paths=PackedStringArray("stats", "hitbox")]
+[node name="AttackInputComponent" type="Node" parent="Player" node_paths=PackedStringArray("stats", "hitbox")]
 script = ExtResource("10_5lm38")
 stats = NodePath("../StatsComponent")
-hitbox = NodePath("../PlayerBody/HitboxComponent")
+hitbox = NodePath("../../HitboxComponent")

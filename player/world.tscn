@@ -1,8 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://dnyyx28ndoydn"]
+[gd_scene load_steps=10 format=3 uid="uid://dnyyx28ndoydn"]
 
 [ext_resource type="PackedScene" uid="uid://c5foatdyk3vje" path="res://player/player.tscn" id="1_ruksl"]
 [ext_resource type="PackedScene" uid="uid://pmmbkobgk3ba" path="res://assets/models/last_level_door.glb" id="2_hyxf3"]
 [ext_resource type="PackedScene" uid="uid://8loce3lc04mm" path="res://enemies/enemy.tscn" id="3_vlxq5"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_0ooqo"]
+vertices = PackedVector3Array(-1.75, 0.5, -9, -0.25, 0.5, -9, -0.5, 0.5, -49.25, -2.25, 0.5, -8, -49.25, 0.5, -49.25, -49.25, 0.5, -8, 0.5, 0.5, -9, 0.75, 0.5, -49.25, 2, 0.5, -9, 2.5, 0.5, -8, 49.25, 0.5, -8, 49.25, 0.5, -49.25, -1.75, 0.5, -7, 0, 0.5, -6.75, -49.25, 0.5, 49.25, 0.25, 0.5, 49.25, 2, 0.5, -7, 49.25, 0.5, 49.25)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(1, 2, 6), PackedInt32Array(6, 2, 7), PackedInt32Array(8, 6, 7), PackedInt32Array(8, 7, 9), PackedInt32Array(9, 7, 10), PackedInt32Array(10, 7, 11), PackedInt32Array(12, 5, 3), PackedInt32Array(12, 13, 5), PackedInt32Array(5, 13, 15), PackedInt32Array(5, 15, 14), PackedInt32Array(16, 9, 10), PackedInt32Array(16, 10, 13), PackedInt32Array(13, 10, 15), PackedInt32Array(15, 10, 17)]
+agent_radius = 0.63
+agent_max_slope = 60.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1s67b"]
 size = Vector3(100, 1, 100)
@@ -21,34 +27,40 @@ size = Vector2(100, 100)
 
 [node name="World" type="Node3D"]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-shape = SubResource("BoxShape3D_1s67b")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("PlaneMesh_ujiyv")
-
 [node name="Player" parent="." instance=ExtResource("1_ruksl")]
+
+[node name="Enemy1" parent="." instance=ExtResource("3_vlxq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6432, 0.909975, -42.4092)
+
+[node name="Enemy2" parent="." instance=ExtResource("3_vlxq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6587, 0.642658, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.716253, 0.697841, 0, -0.697841, 0.716253, 0, 4.95947, 10)
 shadow_enabled = true
 
-[node name="Door" parent="." instance=ExtResource("2_hyxf3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_0ooqo")
 
-[node name="door_mesh" parent="Door" index="0"]
-layers = 4
-
-[node name="StaticBody3D" parent="Door/door_mesh" index="0"]
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="Enemy" parent="." instance=ExtResource("3_vlxq5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6587, 0, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_1s67b")
 
-[editable path="Door"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D"]
+mesh = SubResource("PlaneMesh_ujiyv")
+
+[node name="Door" parent="NavigationRegion3D" instance=ExtResource("2_hyxf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="door_mesh" parent="NavigationRegion3D/Door" index="0"]
+layers = 4
+
+[node name="StaticBody3D" parent="NavigationRegion3D/Door/door_mesh" index="0"]
+collision_layer = 4
+collision_mask = 0
+
+[editable path="NavigationRegion3D/Door"]
