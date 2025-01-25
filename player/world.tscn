@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dnyyx28ndoydn"]
+[gd_scene load_steps=9 format=3 uid="uid://dnyyx28ndoydn"]
 
 [ext_resource type="PackedScene" uid="uid://c5foatdyk3vje" path="res://player/player.tscn" id="1_ruksl"]
 [ext_resource type="PackedScene" uid="uid://pmmbkobgk3ba" path="res://assets/models/last_level_door.glb" id="2_hyxf3"]
+[ext_resource type="PackedScene" uid="uid://8loce3lc04mm" path="res://enemies/enemy.tscn" id="3_vlxq5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1s67b"]
 size = Vector3(100, 1, 100)
@@ -21,6 +22,8 @@ size = Vector2(100, 100)
 [node name="World" type="Node3D"]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -37,3 +40,15 @@ shadow_enabled = true
 
 [node name="Door" parent="." instance=ExtResource("2_hyxf3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="door_mesh" parent="Door" index="0"]
+layers = 4
+
+[node name="StaticBody3D" parent="Door/door_mesh" index="0"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Enemy" parent="." instance=ExtResource("3_vlxq5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6587, 0, 0)
+
+[editable path="Door"]

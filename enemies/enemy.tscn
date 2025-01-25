@@ -1,0 +1,86 @@
+[gd_scene load_steps=11 format=3 uid="uid://8loce3lc04mm"]
+
+[ext_resource type="Texture2D" uid="uid://c2rhxgetoupgj" path="res://icon.svg" id="1_wi31r"]
+[ext_resource type="Script" path="res://components/stats_component.gd" id="2_4yd0n"]
+[ext_resource type="Script" path="res://components/movement_component.gd" id="3_n1jus"]
+[ext_resource type="Script" path="res://components/hurtbox_component.gd" id="4_5fv5h"]
+[ext_resource type="Script" path="res://components/hitbox_component.gd" id="5_cr7b7"]
+[ext_resource type="Script" path="res://components/hurt_component.gd" id="6_85jpa"]
+[ext_resource type="Script" path="res://components/die_component.gd" id="7_yftt6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8d5ga"]
+atlas = ExtResource("1_wi31r")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7p2c3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8d5ga")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7ytxw"]
+radius = 0.62679
+height = 1.25358
+
+[node name="Enemy" type="Node3D"]
+
+[node name="EnemyBody" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.642658, 0)
+
+[node name="EnemySprite" type="AnimatedSprite3D" parent="EnemyBody"]
+modulate = Color(1, 0, 0, 0.988235)
+billboard = 1
+shaded = true
+sprite_frames = SubResource("SpriteFrames_7p2c3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyBody"]
+shape = SubResource("CapsuleShape3D_7ytxw")
+
+[node name="HurtboxComponent" type="Area3D" parent="EnemyBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.642658, 0)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("4_5fv5h")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyBody/HurtboxComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.657053, 0)
+shape = SubResource("CapsuleShape3D_7ytxw")
+
+[node name="HitboxComponent" type="Area3D" parent="EnemyBody" node_paths=PackedStringArray("stats")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.642658, 0)
+script = ExtResource("5_cr7b7")
+stats = NodePath("../../StatsComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyBody/HitboxComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.661681, 0)
+shape = SubResource("CapsuleShape3D_7ytxw")
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.654698, 0)
+aabb = AABB(-0.63896, -0.635812, -0.645255, 1.27792, 1.27162, 1.29051)
+
+[node name="StatsComponent" type="Node" parent="."]
+script = ExtResource("2_4yd0n")
+move_speed = 10.0
+dash_distance = 0.0
+damage = 25.0
+health = 10.0
+
+[node name="MovementComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("3_n1jus")
+actor = NodePath("../EnemyBody")
+
+[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats", "hurtbox")]
+script = ExtResource("6_85jpa")
+stats = NodePath("../StatsComponent")
+hurtbox = NodePath("../EnemyBody/HurtboxComponent")
+
+[node name="DieComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "stats")]
+script = ExtResource("7_yftt6")
+actor = NodePath("..")
+stats = NodePath("../StatsComponent")
