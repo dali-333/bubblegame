@@ -1,4 +1,4 @@
-class_name ChaseState
+class_name ChaseToChargeState
 extends State
 
 @onready var enemy_sprite: AnimatedSprite3D = $"../../../EnemySprite"

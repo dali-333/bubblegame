@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://dnyyx28ndoydn"]
 
 [ext_resource type="PackedScene" uid="uid://c5foatdyk3vje" path="res://player/player.tscn" id="1_ruksl"]
+[ext_resource type="PackedScene" uid="uid://dmgl4ih5iwbrt" path="res://enemies/fear_enemy_backup.tscn" id="2_gq7eh"]
 [ext_resource type="PackedScene" uid="uid://pmmbkobgk3ba" path="res://assets/models/last_level_door.glb" id="2_hyxf3"]
-[ext_resource type="PackedScene" uid="uid://8loce3lc04mm" path="res://enemies/enemy.tscn" id="3_vlxq5"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_0ooqo"]
 vertices = PackedVector3Array(-1.75, 0.5, -9, -0.25, 0.5, -9, -0.5, 0.5, -49.25, -2.25, 0.5, -8, -49.25, 0.5, -49.25, -49.25, 0.5, -8, 0.5, 0.5, -9, 0.75, 0.5, -49.25, 2, 0.5, -9, 2.5, 0.5, -8, 49.25, 0.5, -8, 49.25, 0.5, -49.25, -1.75, 0.5, -7, 0, 0.5, -6.75, -49.25, 0.5, 49.25, 0.25, 0.5, 49.25, 2, 0.5, -7, 49.25, 0.5, 49.25)
@@ -29,11 +29,11 @@ size = Vector2(100, 100)
 
 [node name="Player" parent="." instance=ExtResource("1_ruksl")]
 
-[node name="Enemy1" parent="." instance=ExtResource("3_vlxq5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6432, 0.909975, -42.4092)
+[node name="EnemyBodyBackup" parent="." instance=ExtResource("2_gq7eh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.642658, -20.6495)
 
-[node name="Enemy2" parent="." instance=ExtResource("3_vlxq5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6587, 0.642658, 0)
+[node name="EnemyBodyBackup2" parent="." instance=ExtResource("2_gq7eh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1798, 0.642658, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.716253, 0.697841, 0, -0.697841, 0.716253, 0, 4.95947, 10)
