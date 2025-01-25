@@ -2,7 +2,11 @@
 
 importer="wav"
 type="AudioStreamWAV"
+<<<<<<< Updated upstream
 uid="uid://cad5tawru7lyl"
+=======
+uid="uid://d0gbwb6mh37kf"
+>>>>>>> Stashed changes
 path="res://.godot/imported/hurt.wav-617d37fbf8f70f31b5ba9273d9fd15e5.sample"
 
 [deps]
