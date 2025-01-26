@@ -14,11 +14,10 @@ func chase():
 	navigation_agent.target_position = player.global_transform.origin
 	var next_nav_point = navigation_agent.get_next_path_position()
 	movement_component.velocity = (next_nav_point - actor.global_transform.origin).normalized() * stats.move_speed
-	actor.look_at(Vector3(player.global_position.x, player.global_position.yd, player.global_position.z), Vector3.UP)
+	actor.look_at(Vector3(player.global_position.x, player.global_position.y, player.global_position.z), Vector3.UP)
 
 func _process(delta: float) -> void:
 	pass
 
 func player_in_dash_range():
-	if player:
-		return (actor.global_position.distance_to(player.global_transform.origin) < max_dash_range) and (actor.global_position.distance_to(player.global_transform.origin) > min_dash_range)
+	return (actor.global_position.distance_to(player.global_transform.origin) < max_dash_range) and (actor.global_position.distance_to(player.global_transform.origin) > min_dash_range)
