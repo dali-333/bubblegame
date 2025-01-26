@@ -25,7 +25,7 @@ func animate():
 		enemy_sprite.play("move_down")
 
 func enter() :
-	stats.move_speed = 15
+	stats.move_speed = 10
 	aoe_cooldown_timer = aoe_cooldown
 	if aoe_cooldown_timer > 0:
 		path_finder.chase()

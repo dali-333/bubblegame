@@ -33,7 +33,7 @@ func _on_hurtbox_entered(hurtbox : HurtboxComponent):
 
 func enter() :
 	aoe_attack.area_entered.connect(_on_hurtbox_entered)
-	stats.move_speed = 10.0
+	stats.move_speed = 7.5
 	aoe_timer = aoe_duration
 	if (aoe_timer > 0.0):
 		aoe_attack.monitorable = true

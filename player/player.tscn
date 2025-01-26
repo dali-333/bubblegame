@@ -1,5 +1,6 @@
-[gd_scene load_steps=68 format=3 uid="uid://c5foatdyk3vje"]
+[gd_scene load_steps=70 format=3 uid="uid://c5foatdyk3vje"]
 
+[ext_resource type="Script" path="res://player/player.gd" id="1_xyyll"]
 [ext_resource type="Script" path="res://components/hitbox_component.gd" id="2_2crss"]
 [ext_resource type="Texture2D" uid="uid://c36syyy07vpp0" path="res://assets/spritesheets/player.png" id="2_dh1la"]
 [ext_resource type="Shader" path="res://addons/nojoule-energy-shield/shield.gdshader" id="2_foj0i"]
@@ -16,6 +17,7 @@
 [ext_resource type="Script" path="res://player/player_hurt_component.gd" id="12_4smhn"]
 [ext_resource type="PackedScene" uid="uid://dx33t64cvmf84" path="res://player/ui.tscn" id="15_gsax0"]
 [ext_resource type="Script" path="res://player/ui.gd" id="16_10c3f"]
+[ext_resource type="Script" path="res://components/bubble_score.gd" id="16_jpek8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fxjay"]
 atlas = ExtResource("2_dh1la")
@@ -459,13 +461,14 @@ collision_layer = 0
 collision_mask = 4
 platform_floor_layers = 4
 platform_wall_layers = 4
+script = ExtResource("1_xyyll")
 
 [node name="PlayerSprite" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(-0.7, 0, 0, 0, -0.7, 0, 0, 0, -0.7, -0.159821, 0.442123, 0)
 billboard = 1
 shaded = true
 sprite_frames = SubResource("SpriteFrames_5c0sb")
-animation = &"move_right"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="PlayerCollision" type="CollisionShape3D" parent="."]
@@ -480,9 +483,7 @@ animation_curve = ExtResource("5_wdyrj")
 
 [node name="HitboxComponent" type="Area3D" parent="Shield" node_paths=PackedStringArray("stats")]
 collision_layer = 0
-collision_mask = 2
-monitoring = false
-monitorable = false
+collision_mask = 10
 script = ExtResource("2_2crss")
 stats = NodePath("../../Player/StatsComponent")
 
@@ -547,16 +548,22 @@ hitbox = NodePath("../../Shield/HitboxComponent")
 move_component = NodePath("../MovementComponent")
 shield = NodePath("../../Shield")
 
-[node name="UI" parent="." node_paths=PackedStringArray("stats", "exp", "attack", "move") instance=ExtResource("15_gsax0")]
+[node name="BubbleScore" type="Node" parent="Player"]
+script = ExtResource("16_jpek8")
+
+[node name="UI" parent="." node_paths=PackedStringArray("stats", "exp", "attack", "move", "bubble_score") instance=ExtResource("15_gsax0")]
 script = ExtResource("16_10c3f")
 stats = NodePath("../Player/StatsComponent")
 exp = NodePath("../Player/ExperienceComponent")
 attack = NodePath("../Player/AttackInputComponent")
 move = NodePath("../Player/MoveInputComponent")
+bubble_score = NodePath("../Player/BubbleScore")
 
 [node name="XPBar" parent="UI/VBoxContainer" index="1"]
 rounded = true
 allow_greater = true
 allow_lesser = true
+
+[connection signal="area_entered" from="Shield/HitboxComponent" to="Player/BubbleScore" method="_on_hitbox_component_area_entered"]
 
 [editable path="UI"]

@@ -35,8 +35,6 @@ var shield_shader_off : float = 0.0
 
 func attack():
 	if attack_box is CollisionShape3D:
-		hitbox.monitorable = true
-		hitbox.monitoring = true
 		is_attacking = true
 		attack_timer = attack_duration
 		attack_cooldown_timer = attack_cooldown
@@ -59,8 +57,6 @@ func handle_attack(_delta):
 			attack_timer -= _delta
 			if attack_timer <= 0:
 				is_attacking = false
-				hitbox.monitorable = false
-				hitbox.monitoring = false
 				attack_box.shape.radius = attack_base_radius
 				shield.mesh.radius = 1.25
 				shield.mesh.height = 2.5

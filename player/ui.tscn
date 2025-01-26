@@ -32,6 +32,10 @@ max_value = 80.0
 layout_mode = 2
 text = "Level :"
 
+[node name="BubbleScoreLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Bubble Score : "
+
 [node name="ShieldCooldownLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0

@@ -175,13 +175,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_um6xd"]
-height = 2.50938
-radius = 0.47758
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_o5yff"]
-height = 0.5
-radius = 6.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_qu5yl"]
+size = Vector3(1.77539, 1.76758, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r1ceh"]
 transparency = 1
@@ -193,44 +188,58 @@ top_radius = 6.0
 bottom_radius = 6.0
 height = 0.5
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_o5yff"]
+height = 0.5
+radius = 6.0
+
 [node name="FearEnemy" instance=ExtResource("1_xl5x8")]
 collision_layer = 0
 collision_mask = 4
-floor_max_angle = 0.0
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
 
 [node name="EnemySprite" parent="." index="0"]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -1.22764, 1.38468, 0)
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 1.22886, 1.38468, 0)
 modulate = Color(1, 1, 1, 1)
+billboard = 0
 sprite_frames = SubResource("SpriteFrames_pstlo")
 animation = &"idle"
-frame_progress = 0.123197
 
 [node name="CollisionShape3D" parent="." index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.626362, 0)
-shape = SubResource("CylinderShape3D_um6xd")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0205078, 0.242573, 0)
+shape = SubResource("BoxShape3D_qu5yl")
 
-[node name="AOEAttack" type="Area3D" parent="." index="2"]
+[node name="HurtboxComponent" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.771269, 0)
+
+[node name="HitboxComponent" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.762422, 0)
+collision_layer = 0
+priority = 1
+
+[node name="CollisionShape3D" parent="HitboxComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19217, 0)
+
+[node name="AOEAttack" type="Area3D" parent="HitboxComponent" index="1"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.762422, 0)
 collision_layer = 0
 monitoring = false
 monitorable = false
+priority = 2
+gravity = 0.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AOEAttack" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.376378, 0)
-shape = SubResource("CylinderShape3D_o5yff")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="AOEAttack" index="1"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HitboxComponent/AOEAttack" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.362936, 0)
 mesh = SubResource("CylinderMesh_k770s")
 
-[node name="HurtboxComponent" parent="." index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.771269, 0)
-
-[node name="HitboxComponent" parent="." index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.762422, 0)
-collision_layer = 0
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent/AOEAttack" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.376378, 0)
+shape = SubResource("CylinderShape3D_o5yff")
 
 [node name="StatsComponent" parent="Enemy" index="0"]
+move_speed = 10.0
 dash_distance = 0.0
 damage = 5.0
 xp_gain = 30.0
