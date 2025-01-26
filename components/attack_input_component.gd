@@ -2,13 +2,26 @@ class_name AttackInputComponent
 extends Node
 
 @export var exp_component : ExperienceComponent
+@export var exp_component : ExperienceComponent
 @export var stats : StatsComponent
+@export var hurtbox : HurtboxComponent
 @export var hurtbox : HurtboxComponent
 @export var hitbox : HitboxComponent
 @export var move_component : MovementComponent
 @export var shield : MeshInstance3D
+@export var move_component : MovementComponent
+@export var shield : MeshInstance3D
 @export var attack_duration : float = 0.5
 @export var attack_cooldown : float = 0.4
+@export var shield_duration : float = 1.0
+@export var shield_cooldown : float = 5.0
+
+@onready var attack_box : CollisionShape3D = hitbox.get_child(0)
+@onready var attack_base_radius : float = hitbox.get_child(0).shape.radius
+@onready var base_damage = stats.damage
+@onready var amp_damage = stats.damage + stats.damage * 0.25
+@onready var shield_box : CollisionShape3D = hurtbox.get_child(0)
+@onready var shield_shader_material = shield.material as ShaderMaterial
 @export var shield_duration : float = 1.0
 @export var shield_cooldown : float = 5.0
 
@@ -33,12 +46,24 @@ var shield_cooldown_timer : float = 0.0
 var shield_shader_off : float = 0.0
 
 
+# audio
+@onready var audio_player: AudioStreamPlayer3D = $"../../audio/AudioStreamPlayer3D"
+
 func attack():
 	if attack_box is CollisionShape3D:
 		is_attacking = true
 		attack_timer = attack_duration
 		attack_cooldown_timer = attack_cooldown
 		special_attack_counter += 1
+		
+func play_audio(): 
+	if special_attack_counter == 1: 
+		audio_player.stream = preload("res://assets/sound effects/aoe_1.wav")
+	if special_attack_counter == 2: 
+		audio_player.stream = preload("res://assets/sound effects/aoe_2.wav")
+	if special_attack_counter == 3: 
+		audio_player.stream = preload("res://assets/sound effects/aoe_3.wav")
+	audio_player.play()
 
 func handle_attack(_delta):
 	if is_attacking:
@@ -105,6 +130,8 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack") and attack_cooldown_timer <= 0 and not is_attacking:
 		attack()
+		play_audio()
+	
 	if event.is_action_pressed("shield") and shield_cooldown_timer <= 0 and not is_shielding:
 		shielding()
 

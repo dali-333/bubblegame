@@ -15,6 +15,17 @@ extends Node
 @export var level_curve : Curve
 var sampled_level : float
 
+#variables to control the soundtrack 
+
+var max_current_experience = 500
+var min_current_experience = 320
+var mid_current_experience = 480
+var max_volume = 0 
+var min_volume = -60 
+
+
+
+
 signal level_up(new_level : int)
 signal exp_gained(new_exp : float)
 
