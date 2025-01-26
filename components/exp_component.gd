@@ -7,7 +7,7 @@ extends Node
 @export var current_level : int = 0:
 	set(value):
 		current_level = value
-		level_up.emit(current_level)
+		level_up.emit()
 @export var current_experience : int = 0:
 	set(value):
 		current_experience = value
@@ -24,6 +24,7 @@ func add_experience(amount : int) -> void:
 		current_level += 1
 		print("Level Up : " + str(current_level))
 		experience_to_level += 100
+		level_up.emit()
 	
 	if current_level == max_level:
 		current_experience = min(current_experience, experience_to_level)
@@ -32,11 +33,13 @@ func get_progress() -> float:
 	return float(current_experience) / experience_to_level * 100
 
 func _ready() -> void:
-	level_up.connect(
-		func():
-			sampled_level = level_curve.sample(current_level / max_level) / 10
-			stats.health = 100
-			stats.damage += stats.damage * sampled_level
-			stats.move_speed += stats.move_speed * sampled_level
-			stats.dash_distance += stats.dash_distance * sampled_level
-	)
+	level_up.connect(func():stats.health = 100.0)
+
+func power_with_lvl():
+	sampled_level = level_curve.sample(current_level / max_level) / 10
+	stats.damage += stats.damage * sampled_level
+	stats.move_speed += stats.move_speed * sampled_level
+	stats.dash_distance += stats.dash_distance * sampled_level
+
+func _process(delta: float) -> void:
+	power_with_lvl()
