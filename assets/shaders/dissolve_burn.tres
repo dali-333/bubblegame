@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dtr82euvuigf5"]
+
+[ext_resource type="Shader" path="res://assets/shaders/dissolve_burn_shader.gdshader" id="1_d0l1o"]
+
+[resource]
+shader = ExtResource("1_d0l1o")
+shader_parameter/dissolve_value = null
+shader_parameter/burn_size = null
+shader_parameter/burn_color = null

@@ -21,13 +21,13 @@ animations = [{
 "texture": SubResource("AtlasTexture_1ckdf")
 }],
 "loop": true,
-"name": &"default",
+"name": &"move_right",
 "speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7ytxw"]
-radius = 0.625
-height = 1.25358
+radius = 0.534228
+height = 2.41676
 
 [node name="EnemyBody" type="CharacterBody3D" groups=["Enemies"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.642658, 0)
@@ -37,6 +37,7 @@ modulate = Color(1, 0, 0, 0.988235)
 billboard = 1
 shaded = true
 sprite_frames = SubResource("SpriteFrames_7p2c3")
+animation = &"move_right"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_7ytxw")

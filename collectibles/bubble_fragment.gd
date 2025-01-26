@@ -1,0 +1,2 @@
+class_name BubbleFragment
+extends Area3D

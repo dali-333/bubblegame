@@ -15,6 +15,10 @@ run/main_scene="res://player/world.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[debug]
+
+shapes/collision/shape_color=Color(0.701961, 0.111432, 0, 1)
+
 [global_group]
 
 Player=""
@@ -57,12 +61,21 @@ attack={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(148, 12),"global_position":Vector2(157, 58),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+shield={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
 
 [layer_names]
 
 3d_physics/layer_1="player_hurtbox"
 3d_physics/layer_2="enemy_hurtbox"
 3d_physics/layer_3="environment"
+
+[physics]
+
+3d/physics_engine="JoltPhysics3D"
 
 [shader_globals]
 

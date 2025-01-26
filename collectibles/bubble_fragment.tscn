@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://guiebeby2q8m"]
+
+[ext_resource type="Texture2D" uid="uid://c2rhxgetoupgj" path="res://icon.svg" id="1_12bui"]
+[ext_resource type="Script" path="res://collectibles/bubble_fragment.gd" id="1_o0e7a"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bc0ry"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_12bui")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nvi4b"]
+
+[node name="BubbleFragment" type="Area3D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_o0e7a")
+
+[node name="BubbleSprite" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.841361, 0)
+sprite_frames = SubResource("SpriteFrames_bc0ry")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837258, 0)
+shape = SubResource("SphereShape3D_nvi4b")

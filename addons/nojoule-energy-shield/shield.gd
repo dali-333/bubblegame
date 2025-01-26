@@ -107,13 +107,13 @@ func _ready() -> void:
 	update_material("object_scale", global_transform.basis.get_scale().x)
 
 	# Connect the input event to the shield
-	if handle_input_events and $Area3D:
-		$Area3D.input_event.connect(_on_area_3d_input_event)
+	if handle_input_events and $HitboxComponent:
+		$HitboxComponent.input_event.connect(_on_area_3d_input_event)
 
 	# Connect relay signals for area 3d child
-	if $Area3D:
-		$Area3D.area_entered.connect(_on_area_3d_body_entered)
-		$Area3D.body_shape_entered.connect(_on_area_3d_body_shape_entered)
+	if $HitboxComponent:
+		$HitboxComponent.area_entered.connect(_on_area_3d_body_entered)
+		$HitboxComponent.body_shape_entered.connect(_on_area_3d_body_shape_entered)
 
 
 # Update the shader parameter [param name] with the [param value] and make sure
