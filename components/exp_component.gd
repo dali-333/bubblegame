@@ -32,8 +32,8 @@ signal exp_gained(new_exp : float)
 func add_experience(amount : int) -> void:
 	current_experience += amount
 	while current_experience >= experience_to_level and current_level < max_level:
-		current_experience -= experience_to_level
 		current_level += 1
+		print("Level Up : " + str(current_level))
 		experience_to_level += 100
 	
 	if current_level == max_level:

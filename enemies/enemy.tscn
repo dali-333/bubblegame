@@ -26,8 +26,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7ytxw"]
-radius = 0.625
-height = 1.25358
+radius = 0.780245
+height = 2.28844
 
 [node name="EnemyBody" type="CharacterBody3D" groups=["Enemies"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.642658, 0)

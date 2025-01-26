@@ -5,6 +5,7 @@ extends Node
 @export var move_speed : float = 15.0
 @export var dash_distance : float = 25.0
 @export var damage : float = 1.0
+@export var xp_gain : float = 0.0
 
 signal health_changed()
 signal no_health()
