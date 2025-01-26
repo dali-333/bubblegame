@@ -16,10 +16,10 @@ extends Node
 var sampled_level : float
 
 #variables to control the soundtrack 
-#@onready var soundtrack =  $Soundtrack
-var max_current_experience = 10 
-var min_current_experience = 0
-var mid_current_experience = 5 
+
+var max_current_experience = 500
+var min_current_experience = 320
+var mid_current_experience = 480
 var max_volume = 0 
 var min_volume = -60 
 
@@ -52,21 +52,36 @@ func _ready() -> void:
 			stats.dash_distance += stats.dash_distance * sampled_level
 			
 	)
-	
+
 func _process(delta: float) -> void:
 	print("current experience = ", current_experience)
-	if (current_experience >= min_current_experience) and (current_experience < mid_current_experience) :
-		print('first')
+	if (current_experience < min_current_experience):
+		print('below first')
+		Soundtrack.stream.set_sync_stream_volume(0,-5)
 		Soundtrack.stream.set_sync_stream_volume(1,-60)
 		Soundtrack.stream.set_sync_stream_volume(2,-60)
+		print("volume = ", (current_experience/10)-12)
+		
+	if (current_experience >= min_current_experience) and (current_experience < mid_current_experience) :
+		print('first')
+		Soundtrack.stream.set_sync_stream_volume(0,0)
+		Soundtrack.stream.set_sync_stream_volume(1, -5)
+		#Soundtrack.stream.set_sync_stream_volume(1,(current_experience/100) - 8)
+		Soundtrack.stream.set_sync_stream_volume(2,min_volume)
 	if (current_experience >= mid_current_experience) and (current_experience < max_current_experience):
 		print('second')
-		Soundtrack.stream.set_sync_stream_volume(1, current_experience)
-		Soundtrack.stream.set_sync_stream_volume(2,min_volume)
+		Soundtrack.stream.set_sync_stream_volume(0,  0 )
+		Soundtrack.stream_set_sync_stream(1, -3)
+		Soundtrack.stream_set_sync_stream(2, -5)
+		
+		#Soundtrack.stream.set_sync_stream_volume(1,(current_experience/100) - 6)
+		#Soundtrack.stream.set_sync_stream_volume(2,-(current_experience/100) )
+		print('audio 1',(current_experience/100) - 6 )
+		print('audio 2',-(current_experience/100))
 	if (current_experience >= max_current_experience):
 		print('third')
-		Soundtrack.stream.set_sync_stream_volume(1,current_experience)
-		Soundtrack.stream.set_sync_stream_volume(2,current_experience)
+		Soundtrack.stream.set_sync_stream_volume(1,-3)
+		Soundtrack.stream.set_sync_stream_volume(2,-3)
 		
 		
 	

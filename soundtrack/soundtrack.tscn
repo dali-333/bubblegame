@@ -7,11 +7,11 @@
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_6585s"]
 stream_count = 3
 stream_0/stream = ExtResource("1_ar80x")
-stream_0/volume = 0.0
+stream_0/volume = -60.0
 stream_1/stream = ExtResource("2_xmeom")
-stream_1/volume = 0.0
+stream_1/volume = -60.0
 stream_2/stream = ExtResource("3_vag0w")
-stream_2/volume = 0.0
+stream_2/volume = -60.0
 
 [node name="Soundtrack" type="AudioStreamPlayer"]
 stream = SubResource("AudioStreamSynchronized_6585s")

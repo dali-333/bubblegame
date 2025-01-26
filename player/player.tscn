@@ -1,5 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://c5foatdyk3vje"]
-[gd_scene load_steps=68 format=3 uid="uid://c5foatdyk3vje"]
+[gd_scene load_steps=69 format=3 uid="uid://c5foatdyk3vje"]
 
 [ext_resource type="Script" path="res://components/hitbox_component.gd" id="2_2crss"]
 [ext_resource type="Texture2D" uid="uid://c36syyy07vpp0" path="res://assets/spritesheets/player.png" id="2_dh1la"]
@@ -544,6 +543,11 @@ stats = NodePath("../StatsComponent")
 [node name="AttackInputComponent" type="Node" parent="Player" node_paths=PackedStringArray("exp_component", "stats", "hurtbox", "hitbox", "move_component", "shield")]
 script = ExtResource("10_5lm38")
 exp_component = NodePath("../ExperienceComponent")
+stats = NodePath("../StatsComponent")
+hurtbox = NodePath("../../HurtboxComponent")
+hitbox = NodePath("../../Shield/HitboxComponent")
+move_component = NodePath("../MovementComponent")
+shield = NodePath("../../Shield")
 
 [node name="audio" type="Node3D" parent="."]
 
@@ -552,11 +556,6 @@ exp_component = NodePath("../ExperienceComponent")
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="audio"]
 stream = SubResource("AudioStream_h358p")
 bus = &"sfx"
-stats = NodePath("../StatsComponent")
-hurtbox = NodePath("../../HurtboxComponent")
-hitbox = NodePath("../../Shield/HitboxComponent")
-move_component = NodePath("../MovementComponent")
-shield = NodePath("../../Shield")
 
 [node name="UI" parent="." node_paths=PackedStringArray("stats", "exp", "attack", "move") instance=ExtResource("15_gsax0")]
 script = ExtResource("16_10c3f")

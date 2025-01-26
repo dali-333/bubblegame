@@ -50,7 +50,7 @@ func play_audio():
 		audio_player.stream = preload("res://assets/sound effects/aoe_1.wav")
 	if special_attack_counter == 2: 
 		audio_player.stream = preload("res://assets/sound effects/aoe_2.wav")
-	if special_attack_counter == 1: 
+	if special_attack_counter == 3: 
 		audio_player.stream = preload("res://assets/sound effects/aoe_3.wav")
 	audio_player.play()
 
