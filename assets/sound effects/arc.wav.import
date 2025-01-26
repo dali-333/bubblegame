@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://brw8civ8g2od0"
+path="res://.godot/imported/arc.wav-e720acce9c4a6efe3c0f069ea2ad11a3.sample"
+
+[deps]
+
+source_file="res://assets/sound effects/arc.wav"
+dest_files=["res://.godot/imported/arc.wav-e720acce9c4a6efe3c0f069ea2ad11a3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

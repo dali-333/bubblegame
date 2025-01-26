@@ -15,6 +15,10 @@ run/main_scene="res://player/world.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Soundtrack="*res://soundtrack/soundtrack.tscn"
+
 [debug]
 
 shapes/collision/shape_color=Color(0.701961, 0.111432, 0, 1)

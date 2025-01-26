@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://by5ia5ewo8nhj"
+path="res://.godot/imported/fear_drums.wav-c2bf3646b8c7d47f801a545a44e55e63.sample"
+
+[deps]
+
+source_file="res://assets/sound effects/soundtrack_fear/fear_drums.wav"
+dest_files=["res://.godot/imported/fear_drums.wav-c2bf3646b8c7d47f801a545a44e55e63.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
