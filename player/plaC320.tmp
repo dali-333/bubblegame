@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://components/exp_component.gd" id="4_1c3tg"]
 [ext_resource type="Script" path="res://components/move_input_component.gd" id="4_050hm"]
 [ext_resource type="Curve" uid="uid://cv0k0umipiy7n" path="res://addons/nojoule-energy-shield/impact_animation_curve.tres" id="5_wdyrj"]
-[ext_resource type="Script" path="res://components/die_component.gd" id="8_4ikj3"]
 [ext_resource type="Script" path="res://player/player_stats_component.gd" id="9_xc4fv"]
 [ext_resource type="Script" path="res://components/attack_input_component.gd" id="10_5lm38"]
 [ext_resource type="Script" path="res://player/player_hurt_component.gd" id="12_4smhn"]
@@ -453,6 +452,20 @@ max_value = 10.0
 _data = [Vector2(0, 0), 0.0, 25.0, 0, 0, Vector2(1, 10), 25.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="GDScript" id="GDScript_l2j0v"]
+script/source = "extends DieComponent
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
 [node name="PlayerBody" type="CharacterBody3D" groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.837512, 0)
 collision_layer = 0
@@ -528,15 +541,11 @@ hurt_box = NodePath("../../HurtboxComponent")
 stats_component = NodePath("../StatsComponent")
 move_component = NodePath("../MovementComponent")
 
-[node name="HurtComponent" type="Node" parent="Player" node_paths=PackedStringArray("stats", "hurtbox")]
+[node name="HurtComponent" type="Node" parent="Player"]
 script = ExtResource("12_4smhn")
-stats = NodePath("../StatsComponent")
-hurtbox = NodePath("../../HurtboxComponent")
 
-[node name="DieComponent" type="Node" parent="Player" node_paths=PackedStringArray("actor", "stats")]
-script = ExtResource("8_4ikj3")
-actor = NodePath("../..")
-stats = NodePath("../StatsComponent")
+[node name="DieComponent" type="Node" parent="Player"]
+script = SubResource("GDScript_l2j0v")
 
 [node name="AttackInputComponent" type="Node" parent="Player" node_paths=PackedStringArray("exp_component", "stats", "hurtbox", "hitbox", "move_component", "shield")]
 script = ExtResource("10_5lm38")
@@ -555,8 +564,6 @@ attack = NodePath("../Player/AttackInputComponent")
 move = NodePath("../Player/MoveInputComponent")
 
 [node name="XPBar" parent="UI/VBoxContainer" index="1"]
-rounded = true
-allow_greater = true
-allow_lesser = true
+max_value = 80.0
 
 [editable path="UI"]

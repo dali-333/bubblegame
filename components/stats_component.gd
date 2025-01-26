@@ -14,4 +14,3 @@ signal no_health()
 		health = value
 		health_changed.emit()
 		if health == 0 : no_health.emit()
-		if health > 100.0 : health = 100.0

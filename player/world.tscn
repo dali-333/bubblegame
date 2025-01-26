@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dnyyx28ndoydn"]
+[gd_scene load_steps=13 format=3 uid="uid://dnyyx28ndoydn"]
 
 [ext_resource type="PackedScene" uid="uid://c5foatdyk3vje" path="res://player/player.tscn" id="1_ruksl"]
-[ext_resource type="PackedScene" uid="uid://wx3o7v8ag7dl" path="res://enemies/fear_enemy.tscn" id="2_gq7eh"]
+[ext_resource type="PackedScene" uid="uid://wx3o7v8ag7dl" path="res://enemies/anger_enemy.tscn" id="2_gq7eh"]
 [ext_resource type="PackedScene" uid="uid://pmmbkobgk3ba" path="res://assets/models/last_level_door.glb" id="2_hyxf3"]
 [ext_resource type="Script" path="res://scripts/enemy spawn/spawns.gd" id="3_q2ejt"]
+[ext_resource type="PackedScene" uid="uid://cyj81de1j3kv0" path="res://enemies/fear_enemy.tscn" id="4_4as0j"]
 [ext_resource type="Script" path="res://scripts/enemy spawn/spawn.gd" id="4_vmv6o"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_0ooqo"]
@@ -68,6 +69,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.59161, 1.28532, 0)
 
 [node name="EnemyBody" parent="." instance=ExtResource("2_gq7eh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.85883, 0.642658, 0)
+
+[node name="FearEnemy" parent="." instance=ExtResource("4_4as0j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8477, 0.642658, 4.70304)
 
 [node name="Spawns" type="Node3D" parent="." node_paths=PackedStringArray("spawn_timer")]
 script = ExtResource("3_q2ejt")

@@ -26,6 +26,7 @@ value = 100.0
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 0
+max_value = 80.0
 
 [node name="LevelLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
